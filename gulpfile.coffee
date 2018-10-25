@@ -3,6 +3,7 @@ gulpLoadPlugins = require 'gulp-load-plugins'
 browserSync = require('browser-sync').create()
 es = require 'event-stream'
 $ = gulpLoadPlugins()
+log = require 'fancy-log'
 
 production = !!$.util.env.production
 
@@ -62,8 +63,13 @@ gulp.task 'css', ->
 gulp.task 'js', ->
     es.merge(gulp.src('src/assets/scripts/*.coffee')
     .pipe($.coffee()), gulp.src('src/assets/scripts/*.js'))
-    .pipe if production then $.uglify() else $.util.noop()
-    .pipe $.concat 'all.min.js'
+    .pipe if production
+        $.sourcemaps.init()
+        .pipe $.uglify()
+        .pipe $.concat 'all.min.js'
+        .on('error', log)
+        .pipe $.sourcemaps.write('./')
+    else $.util.noop()
     .pipe gulp.dest 'dist/assets/js/'
     .pipe browserSync.stream()
 
