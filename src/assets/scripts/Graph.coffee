@@ -1,5 +1,5 @@
 itemLabel = (el) -> el.itemLabel?.value ||
-                    el.item.value.match("^http://www\.wikidata\.org/entity/(.+)$")?[1] ||
+                    el.item.value.match("^https://base\.transformap\.co/entity/(.+)$")?[1] ||
                     el.item.value
 
 prepareData = (data) ->

@@ -31,9 +31,17 @@ SparqlGenService = () ->
     return if not data.item or not data.property
 
     out = if useGas data then "PREFIX gas: <http://www.bigdata.com/rdf/gas#>\n\n" else ""
+    prefixes =
+      out +
+      """
+      prefix bd: <http://www.bigdata.com/rdf#>
+      prefix wikibase: <http://wikiba.se/ontology#>
+      prefix wdt: <https://base.transformap.co/prop/direct/>
+      prefix wd: <https://base.transformap.co/entity/>
+      """
 
     if data.size_property
-      out +
+      prefixes +
       """
       SELECT ?item ?itemLabel ?linkTo ?size {
         { SELECT ?item (count(distinct ?element) as ?size) {
@@ -45,7 +53,7 @@ SparqlGenService = () ->
       }
       """
     else
-      out +
+      prefixes +
       """
       SELECT ?item ?itemLabel ?linkTo {
         #{genSparqlClause data}
