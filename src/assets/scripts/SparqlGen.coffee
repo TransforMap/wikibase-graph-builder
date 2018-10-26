@@ -37,7 +37,8 @@ SparqlGenService = () ->
       prefix bd: <http://www.bigdata.com/rdf#>
       prefix wikibase: <http://wikiba.se/ontology#>
       prefix wdt: <https://base.transformap.co/prop/direct/>
-      prefix wd: <https://base.transformap.co/entity/>\n
+      prefix wd: <https://base.transformap.co/entity/>
+      \n
       """
 
     if data.size_property
